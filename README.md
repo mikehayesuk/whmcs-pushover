@@ -1,6 +1,8 @@
-# WHMCS Notifications Provider for Pushover
+# Pushover provider for WHMCS Notifications
 
-Enables [Pushover](https://pushover.net) to be used with the [WHMCS](https://www.whmcs.com) notifications system. More information can be found on [this page](https://docs.whmcs.com/Notifications) and developer docs are available [here](https://developers.whmcs.com/notification-providers/).
+Enables [Pushover](https://pushover.net) to be used with the [WHMCS](https://www.whmcs.com) notifications system.
+
+More information can be found on [this page](https://docs.whmcs.com/Notifications) and developer docs are available [here](https://developers.whmcs.com/notification-providers/).
 
 ## Installation
 
