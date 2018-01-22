@@ -91,6 +91,37 @@ class Pushover implements NotificationModuleInterface
     }
 
     /**
+     * Returns an array containing values for the dynamic field "sound".
+     * 
+     * @param array $settings
+     * @return array
+     */
+    private function getSoundFieldValues(array $settings)
+    {
+        $response = json_decode(file_get_contents('https://api.pushover.net/1/sounds.json?token=' . $settings['api_token']), true);
+                
+        return array_map(function ($name, $id) {
+            return compact('name', 'id');
+        }, $response['sounds'], array_keys($response['sounds']));
+    }
+
+    /**
+     * Returns an array containing values for the dynamic field "priorities".
+     * 
+     * @return array
+     */
+    private function getPriorityFieldValues()
+    {
+        return [
+            ['id' => '-2', 'name' => 'Lowest'],
+            ['id' => '-1', 'name' => 'Low'],
+            ['id' => '0',  'name' => 'Normal'],
+            ['id' => '1',  'name' => 'High'],
+            ['id' => '2',  'name' => 'Emergency'],
+        ];
+    }
+
+    /**
      * Get dynamic field configuration.
      *
      * @param string $fieldName
@@ -101,26 +132,16 @@ class Pushover implements NotificationModuleInterface
     {
         switch ($fieldName) {
             case 'sound':
-                $response = json_decode(file_get_contents('https://api.pushover.net/1/sounds.json?token=' . $settings['api_token']), true);
-                
-                $values = array_map(function ($name, $id) {
-                    return compact('name', 'id');
-                }, $response['sounds'], array_keys($response['sounds']));
-
-                return ['values' => $values];
+                $values = $this->getSoundFieldValues($settings);
+                break;
             case 'priority':
-                return [
-                    'values' => [
-                        ['id' => '-2', 'name' => 'Lowest'],
-                        ['id' => '-1', 'name' => 'Low'],
-                        ['id' => '0',  'name' => 'Normal'],
-                        ['id' => '1',  'name' => 'High'],
-                        ['id' => '2',  'name' => 'Emergency'],
-                    ],
-                ];
+                $values = $this->getPriorityFieldValues();
+                break;
             default:
                 throw new Exception("The field name '{$fieldName}' is not recognised.");
         }
+
+        return compact('values');
     }
 
     /**
