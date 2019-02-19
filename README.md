@@ -12,6 +12,10 @@ More information can be found on [this page](https://docs.whmcs.com/Notification
 
 ## Changelog
 
+### 2019-02-19 1.0.1
+
+Prevent curl from printing Pushover API response (issue #1).
+
 ### 2018-01-12 1.0.0
 
 The first release, Hello World!
